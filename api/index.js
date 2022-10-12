@@ -1,7 +1,8 @@
 const express = require("express");
-const {getAllData, getOneData, setData, deleteData, updateData} = require("../firebase");
+const {getDataQuery,getAllData, getOneData, setData, deleteData, updateData} = require("../firebase");
 const {isUser} = require("../middlewares/isUser")
 const api = express.Router();
+
 // get ALL data
 api.get("/:collection", async (req, res) => {
   const response = await getAllData(req.params.collection);
@@ -10,10 +11,10 @@ api.get("/:collection", async (req, res) => {
 
 // get one document from collection
 
-api.get("/:collection/:id", async (req, res) => {
+api.get("/:collection/:query", async (req, res) => {
   /* Destructuring the req.params object. */
   const { collection, id } = req.params;
-  const response = await getOneData(collection, id);
+  const response = await getDataQuery(collection, ['slug',req.params.query]);
   res.json(response);
 });
 
@@ -26,7 +27,7 @@ api.post("/:collection",isUser , async (req, res) => {
 
 //update document 
 
-api.put("/:collection/:id",isUser, async (req, res) => {
+api.patch("/:collection/:id",isUser, async (req, res) => {
   const { collection, id } = req.params;
   updateData(collection,id,req.body   )
   res.json(req.body);

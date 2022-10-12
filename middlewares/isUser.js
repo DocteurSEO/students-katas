@@ -1,24 +1,12 @@
 const {getToken} = require('../firebase')
 async function isUser(req, res, next) {
-  // const token = req.headers.authorization
-
-  // if(token){
-
+   if(req.body.uid != process.env.UID){
+    res.status(403)
     
-  
-  //    const isAuth = await getToken(token)
-
-  //     if(!isAuth){
-  //       res.status(403)
-  //       res.json({ error:'Forbidden ! '}) 
-  //     }else{
-  //       next()
-  //     }
-     
-  // }else{
-  //   res.status(403)
-  //   res.json({ error:'Forbidden ! '})
-  // }
+    res.send('Forbiden ! ')
+    return
+   }
+   
   next()
 }
 

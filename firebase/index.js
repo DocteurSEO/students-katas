@@ -76,6 +76,23 @@ async function getOneData(collection, id){
 }
 
 
+async function getDataQuery(collection, query){
+ 
+  const refFirebase = db.collection(collection);
+  const snapshot  = await refFirebase.where(query[0], '==', query[1]).get();
+  if (snapshot.empty) {
+    console.log('No matching documents.');
+    return;
+  }  
+  
+  snapshot.forEach(doc => {
+    console.log(doc.id, '=>', doc.data());
+  })
+
+
+}
+
+
 
 /**
  * It takes a collection name and content, and then adds the content to the collection
@@ -134,4 +151,4 @@ async function getToken(token){
   
 
 }
-module.exports = { getAllData ,getOneData ,  setData, updateData, deleteData, getToken};
+module.exports = { getDataQuery,getAllData ,getOneData ,  setData, updateData, deleteData, getToken};
