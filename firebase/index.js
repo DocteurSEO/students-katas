@@ -77,7 +77,7 @@ async function getOneData(collection, id){
 
 
 async function getDataQuery(collection, query){
- 
+ let queryData 
   const refFirebase = db.collection(collection);
   const snapshot  = await refFirebase.where(query[0], '==', query[1]).get();
   if (snapshot.empty) {
@@ -85,10 +85,11 @@ async function getDataQuery(collection, query){
     return;
   }  
   
-  snapshot.forEach(doc => {
-    console.log(doc.id, '=>', doc.data());
+   snapshot.forEach(doc => {
+    queryData = doc.data()
   })
 
+  return queryData
 
 }
 

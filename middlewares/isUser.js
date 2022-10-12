@@ -6,7 +6,7 @@ async function isUser(req, res, next) {
     res.send('Forbiden ! ')
     return
    }
-   
+   delete req.body.uid
   next()
 }
 

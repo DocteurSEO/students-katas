@@ -1,6 +1,7 @@
 const express = require("express");
 const {getDataQuery,getAllData, getOneData, setData, deleteData, updateData} = require("../firebase");
 const {isUser} = require("../middlewares/isUser")
+const startKata = require('../template/index')
 const api = express.Router();
 
 // get ALL data
@@ -14,8 +15,9 @@ api.get("/:collection", async (req, res) => {
 api.get("/:collection/:query", async (req, res) => {
   /* Destructuring the req.params object. */
   const { collection, id } = req.params;
-  const response = await getDataQuery(collection, ['slug',req.params.query]);
-  res.json(response);
+  const response = await getDataQuery('collection', ['slug',req.params.query]);
+ 
+  res.send(startKata(response.titre, response.codes));
 });
 
 
